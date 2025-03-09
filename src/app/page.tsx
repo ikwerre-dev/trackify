@@ -1,6 +1,5 @@
 'use client';
-import Image from "next/image";
-import React from 'react';
+ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const fadeIn = {
@@ -61,7 +60,7 @@ export default function Home() {
                 <span className="text-orange-500 block mt-2">With Precision</span>
               </motion.h1>
               <p className="text-gray-600 text-lg md:text-xl mb-12 leading-relaxed">
-                Experience real-time tracking with unparalleled accuracy and detailed insights into your shipment's journey.
+                Experience real-time tracking with unparalleled accuracy and detailed insights into your shipment&lsquo;s journey.
               </p>
               <div className="flex gap-4 justify-center">
                 <a
@@ -266,7 +265,7 @@ export default function Home() {
                       </div>
                     </div>
                     <blockquote className="text-gray-600 leading-relaxed italic">
-                      "{testimonial.quote}"
+                      &quot;{testimonial.quote}&quot;
                     </blockquote>
                   </div>
                 ))}

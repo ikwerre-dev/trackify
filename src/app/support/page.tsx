@@ -40,7 +40,7 @@ export default function SupportPage() {
             variants={fadeIn}
             className="text-gray-600 text-lg max-w-2xl mx-auto"
           >
-            We're here to help you with any questions or concerns
+            We&lsquo;re here to help you with any questions or concerns
           </motion.p>
         </motion.div>
 
@@ -186,7 +186,7 @@ export default function SupportPage() {
           animate="animate"
           className="bg-white rounded-2xl p-8 shadow-xl text-center"
         >
-          <h2 className="text-2xl font-bold mb-4">Can't find what you're looking for?</h2>
+          <h2 className="text-2xl font-bold mb-4">Can&lsquo;t find what you&lsquo;re looking for?</h2>
           <p className="text-gray-600 mb-6">
             Our support team is available 24/7 to assist you with any questions or concerns.
           </p>

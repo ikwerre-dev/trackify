@@ -53,7 +53,7 @@ export default function AboutPage() {
               Founded in 2020, Trackify emerged from a simple observation: businesses needed a better way to track and manage their shipments. What started as a small team with a big vision has grown into a leading logistics technology provider trusted by thousands of companies worldwide.
             </p>
             <p className="text-gray-600 leading-relaxed">
-              Our mission is to bring transparency and efficiency to the logistics industry through innovative technology solutions. We believe that every package has a story, and we're here to help tell it.
+              Our mission is to bring transparency and efficiency to the logistics industry through innovative technology solutions. We believe that every package has a story, and we&lsquo;re here to help tell it.
             </p>
           </motion.div>
           
@@ -124,7 +124,7 @@ export default function AboutPage() {
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Join Our Journey</h2>
           <p className="text-orange-100 text-lg mb-8 max-w-2xl mx-auto">
-            Be part of the future of logistics technology. Let's transform package tracking together.
+            Be part of the future of logistics technology. Let&lsquo;s transform package tracking together.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <a
