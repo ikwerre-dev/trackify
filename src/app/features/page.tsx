@@ -1,52 +1,19 @@
 'use client';
-import { motion } from 'framer-motion';
-
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
-};
-
-const staggerContainer = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3
-    }
-  }
-};
 
 export default function FeaturesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-orange-100/80 to-orange-200/70">
       <div className="max-w-7xl mx-auto px-6 py-24">
-        <motion.div
-          initial="initial"
-          animate="animate"
-          className="text-center mb-20"
-        >
-          <motion.h1
-            variants={fadeIn}
-            className="text-4xl md:text-6xl font-bold mb-6"
-          >
+        <div className="text-center mb-20">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Powerful Features
-          </motion.h1>
-          <motion.p
-            variants={fadeIn}
-            className="text-gray-600 text-lg max-w-2xl mx-auto"
-          >
+          </h1>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Discover how our advanced tracking capabilities can transform your logistics operations
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          animate="animate"
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {[
             {
               title: "Real-Time Tracking",
@@ -93,9 +60,8 @@ export default function FeaturesPage() {
               ]
             }
           ].map((feature, i) => (
-            <motion.div
+            <div
               key={i}
-              variants={fadeIn}
               className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               <div className="bg-gradient-to-br from-orange-400 to-orange-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
@@ -115,16 +81,11 @@ export default function FeaturesPage() {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={fadeIn}
-          initial="initial"
-          animate="animate"
-          className="bg-orange-500 rounded-3xl p-12 text-center text-white"
-        >
+        <div className="bg-orange-500 rounded-3xl p-12 text-center text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Tracking?</h2>
           <p className="text-orange-100 text-lg mb-8 max-w-2xl mx-auto">
             Join thousands of businesses that trust our platform for their logistics needs.
@@ -143,7 +104,7 @@ export default function FeaturesPage() {
               Request Demo
             </a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

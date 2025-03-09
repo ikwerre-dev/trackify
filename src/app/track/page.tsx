@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface TrackingData {
   trackingNumber: string;
@@ -27,18 +26,6 @@ interface TrackingData {
     status: string;
   }>;
 }
-
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
-};
-
-const slideIn = {
-  initial: { x: -20, opacity: 0 },
-  animate: { x: 0, opacity: 1 },
-  transition: { duration: 0.5 }
-};
 
 export default function TrackPage() {
   const [trackingCode, setTrackingCode] = useState<string>("");
@@ -88,43 +75,33 @@ export default function TrackPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
-      <motion.div 
-        initial="initial"
-        animate="animate"
-        className="max-w-4xl mx-auto"
-      >
-        <motion.div 
-          variants={fadeIn}
-          className="text-center mb-12"
-        >
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-orange-100/80 to-orange-200/70 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">Track Your Package</h1>
           <p className="text-gray-600 text-lg">Enter your tracking number to get real-time updates</p>
-        </motion.div>
+        </div>
 
-        <motion.form 
-          variants={fadeIn}
+        <form 
           onSubmit={handleSubmit} 
-          className="mb-12 bg-white/60 backdrop-blur-xl p-8 rounded-2xl shadow-lg border border-gray-100"
+          className="mb-12 bg-white/60 backdrop-blur-xl p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100"
         >
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <input
               type="text"
               value={trackingCode}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTrackingCode(e.target.value)}
               placeholder="Enter tracking number"
-              className="flex-1 px-6 py-4 text-lg border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white transition-all duration-300"
+              className="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white transition-all duration-300"
               required
             />
-            <motion.button
+            <button
               type="submit"
               disabled={isLoading}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-12 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 sm:py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -132,68 +109,52 @@ export default function TrackPage() {
                   Tracking...
                 </div>
               ) : "Track"}
-            </motion.button>
+            </button>
           </div>
-        </motion.form>
+        </form>
 
-        <AnimatePresence>
           {error && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-6 mb-8 text-center"
-            >
+            <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-4 sm:p-6 mb-8 text-center">
               {error}
-            </motion.div>
+            </div>
           )}
 
           {trackingData && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 divide-y divide-gray-100"
-            >
-              <div className="flex justify-between items-center mb-8">
-                <motion.h2 
-                  variants={slideIn}
-                  className="text-2xl font-bold text-gray-900"
-                >
+            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 divide-y divide-gray-100">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
                   Tracking #{trackingData.trackingNumber}
-                </motion.h2>
-                <motion.span 
-                  variants={slideIn}
-                  className="px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium"
-                >
+                </h2>
+                <span className="px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
                   {trackingData.status}
-                </motion.span>
+                </span>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8">
-                <motion.div variants={fadeIn} className="space-y-6">
-                  <div className="bg-gray-50 rounded-xl p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 py-8">
+                <div className="space-y-6">
+                  <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
                     <h3 className="text-sm font-medium text-gray-500 mb-2">Current Location</h3>
-                    <p className="text-xl font-semibold text-gray-900">{trackingData.location}</p>
+                    <p className="text-lg sm:text-xl font-semibold text-gray-900">{trackingData.location}</p>
                   </div>
-                  <div className="bg-gray-50 rounded-xl p-6">
+                  <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
                     <h3 className="text-sm font-medium text-gray-500 mb-2">Last Update</h3>
-                    <p className="text-xl font-semibold text-gray-900">{trackingData.lastUpdate}</p>
+                    <p className="text-lg sm:text-xl font-semibold text-gray-900">{trackingData.lastUpdate}</p>
                   </div>
-                </motion.div>
-                <motion.div variants={fadeIn} className="space-y-6">
-                  <div className="bg-gray-50 rounded-xl p-6">
+                </div>
+                <div className="space-y-6">
+                  <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
                     <h3 className="text-sm font-medium text-gray-500 mb-2">Estimated Delivery</h3>
-                    <p className="text-xl font-semibold text-gray-900">{trackingData.estimatedDelivery}</p>
+                    <p className="text-lg sm:text-xl font-semibold text-gray-900">{trackingData.estimatedDelivery}</p>
                   </div>
-                  <div className="bg-gray-50 rounded-xl p-6">
+                  <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
                     <h3 className="text-sm font-medium text-gray-500 mb-2">Type</h3>
-                    <p className="text-xl font-semibold text-gray-900">{trackingData.details.type}</p>
+                    <p className="text-lg sm:text-xl font-semibold text-gray-900">{trackingData.details.type}</p>
                   </div>
-                </motion.div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8">
-                <motion.div variants={fadeIn} className="bg-gray-50 rounded-xl p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 py-8">
+                <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Recipient Details</h3>
                   <div className="space-y-2">
                     <p className="font-medium text-gray-900">{trackingData.recipient.name}</p>
@@ -202,23 +163,22 @@ export default function TrackPage() {
                       {trackingData.recipient.city}, {trackingData.recipient.state} {trackingData.recipient.zip}
                     </p>
                   </div>
-                </motion.div>
-                <motion.div variants={fadeIn} className="bg-gray-50 rounded-xl p-6">
+                </div>
+                <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Shipment Details</h3>
                   <div className="space-y-2">
                     <p className="text-gray-600"><span className="font-medium">Contents:</span> {trackingData.details.contents}</p>
                     <p className="text-gray-600"><span className="font-medium">Sender:</span> {trackingData.details.sender}</p>
                   </div>
-                </motion.div>
+                </div>
               </div>
 
-              <motion.div variants={fadeIn} className="pt-8">
+              <div className="pt-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">Tracking History</h3>
                 <div className="space-y-6">
                   {trackingData.history.map((event, index) => (
-                    <motion.div 
+                    <div 
                       key={index}
-                      variants={slideIn}
                       className="flex items-start gap-4"
                     >
                       <div className="relative">
@@ -234,14 +194,13 @@ export default function TrackPage() {
                         <p className="text-sm text-gray-500">{event.location}</p>
                         <p className="text-sm text-gray-500">{event.date}</p>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           )}
-        </AnimatePresence>
-      </motion.div>
+      </div>
     </div>
   );
 }
