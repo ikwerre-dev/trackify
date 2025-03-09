@@ -1,104 +1,247 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface TrackingData {
+  trackingNumber: string;
+  status: string;
+  location: string;
+  lastUpdate: string;
+  estimatedDelivery: string;
+  recipient: {
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  details: {
+    type: string;
+    contents: string;
+    sender: string;
+  };
+  history: Array<{
+    date: string;
+    location: string;
+    status: string;
+  }>;
+}
+
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+};
+
+const slideIn = {
+  initial: { x: -20, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  transition: { duration: 0.5 }
+};
 
 export default function TrackPage() {
-  const [trackingCode, setTrackingCode] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [trackingData, setTrackingData] = useState(null);
+  const [trackingCode, setTrackingCode] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [trackingData, setTrackingData] = useState<TrackingData | null>(null);
+  const [error, setError] = useState<string>("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    // TODO: Implement actual tracking API integration
+    setError("");
+    
+    // Simulated API call with predefined data
     setTimeout(() => {
-      setTrackingData({
-        status: "In Transit" as const,
-        location: "Miami, FL",
-        lastUpdate: "2024-02-14 10:30 AM",
-        estimatedDelivery: "2024-02-16",
-        history: [
-          { date: "2024-02-14 10:30 AM", location: "Miami, FL", status: "In Transit" },
-          { date: "2024-02-14 08:00 AM", location: "Miami, FL", status: "Arrived at Facility" },
-          { date: "2024-02-13 11:00 PM", location: "Atlanta, GA", status: "Departed" },
-        ],
-      });
+      if (trackingCode.toUpperCase() === "A836HE") {
+        setTrackingData({
+          trackingNumber: "A836HE",
+          status: "In Transit",
+          location: "Washington, DC",
+          lastUpdate: "2024-03-08 15:45 PM",
+          estimatedDelivery: "2024-03-11",
+          recipient: {
+            name: "Harrison Myers",
+            address: "319 Osage Street",
+            city: "Front Royal",
+            state: "Virginia",
+            zip: "22630"
+          },
+          details: {
+            type: "Cash Delivery",
+            contents: "Physical cash of $85,000.00 plus $13,000 add ons on returned payments",
+            sender: "Cash Loading Program"
+          },
+          history: [
+            { date: "2024-03-08 15:45 PM", location: "Washington, DC", status: "In Transit" },
+            { date: "2024-03-08 09:30 AM", location: "Richmond, VA", status: "Departed" },
+            { date: "2024-03-07 16:20 PM", location: "Richmond, VA", status: "Processing" },
+            { date: "2024-03-07 10:00 AM", location: "Richmond, VA", status: "Shipment Received" },
+          ],
+        });
+      } else {
+        setTrackingData(null);
+        setError("Invalid tracking number. Please check and try again.");
+      }
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
   };
 
   return (
     <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-black mb-4">Track Your Package</h1>
-          <p className="text-gray-600">Enter your tracking number to get real-time updates</p>
-        </div>
+      <motion.div 
+        initial="initial"
+        animate="animate"
+        className="max-w-4xl mx-auto"
+      >
+        <motion.div 
+          variants={fadeIn}
+          className="text-center mb-12"
+        >
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">Track Your Package</h1>
+          <p className="text-gray-600 text-lg">Enter your tracking number to get real-time updates</p>
+        </motion.div>
 
-        <form onSubmit={handleSubmit} className="mb-12">
+        <motion.form 
+          variants={fadeIn}
+          onSubmit={handleSubmit} 
+          className="mb-12 bg-white/60 backdrop-blur-xl p-8 rounded-2xl shadow-lg border border-gray-100"
+        >
           <div className="flex gap-4">
             <input
               type="text"
               value={trackingCode}
-              onChange={(e) => setTrackingCode(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTrackingCode(e.target.value)}
               placeholder="Enter tracking number"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="flex-1 px-6 py-4 text-lg border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white transition-all duration-300"
               required
             />
-            <button
+            <motion.button
               type="submit"
               disabled={isLoading}
-              className="bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors disabled:opacity-50"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-12 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Tracking..." : "Track"}
-            </button>
+              {isLoading ? (
+                <div className="flex items-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Tracking...
+                </div>
+              ) : "Track"}
+            </motion.button>
           </div>
-        </form>
+        </motion.form>
 
-        {trackingData && (
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div>
-                <h3 className="text-sm font-medium text-gray-500 mb-1">Status</h3>
-                <p className="text-lg font-semibold text-black">{trackingData.status}</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium text-gray-500 mb-1">Current Location</h3>
-                <p className="text-lg font-semibold text-black">{trackingData.location}</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium text-gray-500 mb-1">Last Update</h3>
-                <p className="text-lg font-semibold text-black">{trackingData.lastUpdate}</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium text-gray-500 mb-1">Estimated Delivery</h3>
-                <p className="text-lg font-semibold text-black">{trackingData.estimatedDelivery}</p>
-              </div>
-            </div>
+        <AnimatePresence>
+          {error && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-6 mb-8 text-center"
+            >
+              {error}
+            </motion.div>
+          )}
 
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Tracking History</h3>
-              <div className="space-y-4">
-                {trackingData.history.map((event, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="relative">
-                      <div className="h-4 w-4 rounded-full bg-orange-500"></div>
-                      {index !== trackingData.history.length - 1 && (
-                        <div className="absolute top-4 left-2 w-0.5 h-full -ml-[2px] bg-gray-200"></div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-black">{event.status}</p>
-                      <p className="text-sm text-gray-500">{event.location}</p>
-                      <p className="text-sm text-gray-500">{event.date}</p>
-                    </div>
+          {trackingData && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 divide-y divide-gray-100"
+            >
+              <div className="flex justify-between items-center mb-8">
+                <motion.h2 
+                  variants={slideIn}
+                  className="text-2xl font-bold text-gray-900"
+                >
+                  Tracking #{trackingData.trackingNumber}
+                </motion.h2>
+                <motion.span 
+                  variants={slideIn}
+                  className="px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium"
+                >
+                  {trackingData.status}
+                </motion.span>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8">
+                <motion.div variants={fadeIn} className="space-y-6">
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h3 className="text-sm font-medium text-gray-500 mb-2">Current Location</h3>
+                    <p className="text-xl font-semibold text-gray-900">{trackingData.location}</p>
                   </div>
-                ))}
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h3 className="text-sm font-medium text-gray-500 mb-2">Last Update</h3>
+                    <p className="text-xl font-semibold text-gray-900">{trackingData.lastUpdate}</p>
+                  </div>
+                </motion.div>
+                <motion.div variants={fadeIn} className="space-y-6">
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h3 className="text-sm font-medium text-gray-500 mb-2">Estimated Delivery</h3>
+                    <p className="text-xl font-semibold text-gray-900">{trackingData.estimatedDelivery}</p>
+                  </div>
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h3 className="text-sm font-medium text-gray-500 mb-2">Type</h3>
+                    <p className="text-xl font-semibold text-gray-900">{trackingData.details.type}</p>
+                  </div>
+                </motion.div>
               </div>
-            </div>
-          </div>
-        )}
-      </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8">
+                <motion.div variants={fadeIn} className="bg-gray-50 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Recipient Details</h3>
+                  <div className="space-y-2">
+                    <p className="font-medium text-gray-900">{trackingData.recipient.name}</p>
+                    <p className="text-gray-600">{trackingData.recipient.address}</p>
+                    <p className="text-gray-600">
+                      {trackingData.recipient.city}, {trackingData.recipient.state} {trackingData.recipient.zip}
+                    </p>
+                  </div>
+                </motion.div>
+                <motion.div variants={fadeIn} className="bg-gray-50 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Shipment Details</h3>
+                  <div className="space-y-2">
+                    <p className="text-gray-600"><span className="font-medium">Contents:</span> {trackingData.details.contents}</p>
+                    <p className="text-gray-600"><span className="font-medium">Sender:</span> {trackingData.details.sender}</p>
+                  </div>
+                </motion.div>
+              </div>
+
+              <motion.div variants={fadeIn} className="pt-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">Tracking History</h3>
+                <div className="space-y-6">
+                  {trackingData.history.map((event, index) => (
+                    <motion.div 
+                      key={index}
+                      variants={slideIn}
+                      className="flex items-start gap-4"
+                    >
+                      <div className="relative">
+                        <div className="h-4 w-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center">
+                          <div className="h-2 w-2 rounded-full bg-white"></div>
+                        </div>
+                        {index !== trackingData.history.length - 1 && (
+                          <div className="absolute top-4 left-2 w-0.5 h-full -ml-[2px] bg-gradient-to-b from-orange-500 to-orange-100"></div>
+                        )}
+                      </div>
+                      <div className="bg-gray-50 rounded-xl p-4 flex-1">
+                        <p className="font-medium text-gray-900">{event.status}</p>
+                        <p className="text-sm text-gray-500">{event.location}</p>
+                        <p className="text-sm text-gray-500">{event.date}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }
