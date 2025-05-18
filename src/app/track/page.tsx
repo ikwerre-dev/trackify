@@ -85,7 +85,7 @@ export default function TrackPage() {
         setError("Invalid tracking number. Please check and try again.");
       }
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   const handlePayment = (e: React.FormEvent<HTMLFormElement>) => {
