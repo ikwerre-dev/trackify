@@ -85,7 +85,7 @@ export default function TrackPage() {
         setError("Invalid tracking number. Please check and try again.");
       }
       setIsLoading(false);
-    }, 1000);
+    }, 2000);
   };
 
   const handlePayment = (e: React.FormEvent<HTMLFormElement>) => {
@@ -260,7 +260,7 @@ export default function TrackPage() {
           </div>
         )}
         {showSuccessPopup && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-xl p-6 max-w-md mx-4">
               <div className="text-center">
                 <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
@@ -269,7 +269,7 @@ export default function TrackPage() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Payment Verification in Progress</h3>
-                <p className="text-sm text-gray-500">Your payment is being verified and the status will be updated soon.</p>
+                <p className="text-sm text-gray-500">Your payment is being verified and the package status will be updated soon.</p>
               </div>
             </div>
           </div>
