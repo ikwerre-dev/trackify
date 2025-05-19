@@ -81,7 +81,7 @@ export default function TrackPage() {
         });
       } else {
         setTrackingData(null);
-        setError("Invalid tracking number. Please check and try again.");
+        setError("No order found yet for this tracking code .");
       }
       setIsLoading(false);
     }, 1000);

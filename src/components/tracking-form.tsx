@@ -23,7 +23,7 @@ export default function TrackingForm() {
       if (shipping) {
         document.location = (`/track/${shipping.trackingNumber}`)
       } else {
-        setError("Invalid tracking number. Please check and try again.")
+        setError("No order found yet for this tracking code .")
       }
     } catch (err) {
       setError("An error occurred while tracking your package. Please try again.")
