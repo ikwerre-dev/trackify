@@ -97,13 +97,14 @@ export default function ShippingModal({
 
     try {
       await updateShipping(shipping.id, formData)
-      router.refresh()
+       router.refresh()
       onClose()
     } catch (err) {
       console.error(err)
       setError("Failed to update shipping. Please try again.")
     } finally {
       setIsLoading(false)
+ 
     }
   }
 
@@ -138,6 +139,7 @@ export default function ShippingModal({
         location: "",
         date: new Date().toISOString().slice(0, 16),
       })
+  
       // Refresh the shipping data
       router.refresh()
     } catch (err) {

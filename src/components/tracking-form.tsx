@@ -21,7 +21,7 @@ export default function TrackingForm() {
       const shipping = await getShippingByTrackingNumber(trackingCode)
 
       if (shipping) {
-        router.push(`/track/${shipping.trackingNumber}`)
+        document.location = (`/track/${shipping.trackingNumber}`)
       } else {
         setError("Invalid tracking number. Please check and try again.")
       }
