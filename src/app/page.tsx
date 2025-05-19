@@ -72,12 +72,7 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </a>
-                <a
-                  href="/learn-more"
-                  className="inline-flex items-center bg-white text-gray-800 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-all border border-gray-200"
-                >
-                  Learn More
-                </a>
+               
               </div>
             </motion.div >
           </div>
@@ -328,13 +323,13 @@ export default function Home() {
                   </p>
                   <div className="flex flex-col md:flex-row gap-4 justify-center">
                     <a
-                      href="/signup"
+                      href="?page=/signup"
                       className="inline-flex items-center bg-white text-orange-500 px-8 py-4 rounded-xl font-semibold hover:bg-orange-50 transition-all"
                     >
                       Get Started Free
                     </a>
                     <a
-                      href="/demo"
+                      href="?page=/demo"
                       className="inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all"
                     >
                       Request Demo
